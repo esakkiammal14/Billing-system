@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Restaurant Billing System</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>🍽️ Restaurant Billing System</h1>
+        <div class="header-actions">
+            <button id="adminToggle" class="btn-admin">Admin Mode</button>
+            <button id="salesReportBtn" class="btn-report">Monthly Sales Report</button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Menu Section -->
+        <section class="menu-section">
+            <h2>Menu</h2>
+            <div class="category-filters">
+                <button class="category-btn active" data-category="all">All Items</button>
+                <button class="category-btn" data-category="morning">Morning</button>
+                <button class="category-btn" data-category="lunch">Lunch</button>
+                <button class="category-btn" data-category="dinner">Dinner</button>
+            </div>
+            <div id="menuGrid" class="menu-grid">
+                <!-- Menu items will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <!-- Cart Section -->
+        <aside class="cart-section">
+            <h2>Cart & Bill</h2>
+            <div id="cartItems" class="cart-items">
+                <p class="empty-cart">Your cart is empty</p>
+            </div>
+            <div id="billSummary" class="bill-summary" style="display: none;">
+                <div class="bill-details">
+                    <div class="bill-row">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">₹0.00</span>
+                    </div>
+                    <div class="bill-row">
+                        <span>Tax (5%):</span>
+                        <span id="tax">₹0.00</span>
+                    </div>
+                    <div class="bill-row total">
+                        <span>Total:</span>
+                        <span id="total">₹0.00</span>
+                    </div>
+                </div>
+                <div class="cart-actions">
+                    <button id="clearCartBtn" class="btn-clear">Clear Cart</button>
+                    <button id="payNowBtn" class="btn-pay">Pay Now</button>
+                    <button id="printBillBtn" class="btn-print">Print Bill</button>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Admin Panel Modal -->
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Admin Panel - Menu Management</h2>
+            
+            <!-- Password Section -->
+            <div id="adminLogin" class="admin-login">
+                <input type="password" id="adminPassword" placeholder="Enter admin password" />
+                <button id="loginBtn" class="btn-login">Login</button>
+            </div>
+
+            <!-- Admin Panel Content -->
+            <div id="adminPanel" class="admin-panel" style="display: none;">
+                <h3>Add New Menu Item</h3>
+                <form id="addItemForm" class="admin-form">
+                    <input type="text" id="itemName" placeholder="Item Name" required />
+                    <input type="number" id="itemPrice" placeholder="Price (₹)" step="0.01" required />
+                    <input type="url" id="itemImage" placeholder="Image URL" required />
+                    <select id="itemCategory" required>
+                        <option value="">Select Category</option>
+                        <option value="morning">Morning</option>
+                        <option value="lunch">Lunch</option>
+                        <option value="dinner">Dinner</option>
+                    </select>
+                    <button type="submit" class="btn-add">Add Item</button>
+                </form>
+
+                <h3>Manage Existing Items</h3>
+                <div id="adminMenuList" class="admin-menu-list">
+                    <!-- Admin menu items will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Code Modal -->
+    <div id="qrModal" class="modal">
+        <div class="modal-content qr-modal">
+            <span class="close">&times;</span>
+            <h2>Payment QR Code</h2>
+            <div id="qrcode" class="qrcode-container"></div>
+            <div id="paymentDetails" class="payment-details"></div>
+            <button id="closeQRBtn" class="btn-close">Close</button>
+        </div>
+    </div>
+
+    <!-- Sales Report Modal -->
+    <div id="salesModal" class="modal">
+        <div class="modal-content sales-modal">
+            <span class="close">&times;</span>
+            <h2>Monthly Sales Report</h2>
+            <div id="salesReport" class="sales-report">
+                <!-- Sales report will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Print Bill Section (Hidden, only for printing) -->
+    <div id="printBill" class="print-bill" style="display: none;">
+        <div class="print-header">
+            <h1>Restaurant Bill</h1>
+            <p id="printOrderId"></p>
+            <p id="printDate"></p>
+        </div>
+        <div id="printItems" class="print-items"></div>
+        <div class="print-summary">
+            <div class="print-row">
+                <span>Subtotal:</span>
+                <span id="printSubtotal"></span>
+            </div>
+            <div class="print-row">
+                <span>Tax (5%):</span>
+                <span id="printTax"></span>
+            </div>
+            <div class="print-row total">
+                <span>Total:</span>
+                <span id="printTotal"></span>
+            </div>
+        </div>
+        <div class="print-footer">
+            <p>Thank you for your visit!</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
